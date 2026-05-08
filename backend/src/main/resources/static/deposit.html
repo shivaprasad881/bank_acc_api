@@ -92,8 +92,9 @@
 
         function deposit() {
             let amt = document.getElementById("numberInput").value;
+            let int_amt = parseInt(amt);
             
-            if(amt == "") {
+            if(amt == "" || int_amt<=0) {
                 showToast("Please enter valid amount");
             } else {
                 // now we had valid amt - now we need to deposit that money in user acc

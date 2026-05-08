@@ -143,10 +143,10 @@
             //we would look at failure transactions afterwords
 
 
-
+            let int_amt = parseInt(tar_amt);
             
-            if(tar_acc=="" || tar_amt==""){
-                showToast("please enter the details!!")
+            if(tar_acc=="" || tar_amt=="" || int_amt<=0 ){
+                showToast("please enter valid details!!")
             }
             else{
                 // valid data
