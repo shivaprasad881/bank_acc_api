@@ -81,11 +81,11 @@
                 <input type="text" id="useracc" placeholder="Acc00000001">
             </div> -->
             <div class="input-group">
-                <label>Enter new pin : </label>
+                <label>Enter Old pin : </label>
                 <input type="number" id="pin1" placeholder="0000">
             </div>
             <div class="input-group">
-                <label>Confirm pin : </label>
+                <label>Enter New pin : </label>
                 <input type="number" id="pin2" placeholder="0000">
             </div>
             <button type="button" onclick="update_pin()">Update</button>
@@ -96,12 +96,12 @@
         //these parameters we would get from the redirection url ,because in the redirection url along with the dest html file we also included these paremeeter as key value pairts ,so by using thekey we can accesss the values , this is callled parameter chainging 
         const params = new URLSearchParams(window.location.search);
         const accno = params.get("accno");
-        //const pin = params.get("pin");
+        
 
         function update_pin(){
-            //let accno = document.getElementById("useracc").value;
-            let pin1 = document.getElementById("pin1").value;
-            let pin2 = document.getElementById("pin2").value;
+            
+            let pin1 = document.getElementById("pin1").value;//old pin
+            let pin2 = document.getElementById("pin2").value;//new pin
 
             
 
@@ -112,28 +112,25 @@
             else if (pin1.length!=4 || pin2.length!=4){
                 showToast("please enter the pin of valid length !!")
             }
-            else if(pin1!=pin2){
-                showToast("please enter the same pins !!")
-            }
             else{
 
-                //input are of valid length - frontend check completed
+                //first we would validate the user old pin - then we would update it - get true/false
+                
+                let url = "http://localhost:8080/validatepin?accno=" + accno + "&user_pin=" + pin1  ;
 
-                //backend check - now check whether the accno is present in db or not
-
-                url = "http://localhost:8080/check_accno?accno="+ accno
-
-                //check whether accno is present in the database - get request
-
+                
                 fetch(url,{
                     method : 'get'
                 })
 
-                .then(response => response.text()) //response would be text
+
+                .then(response => response.text())
+
                 .then(data => {
                     if(data=="true"){
-                        //correct accno
-                        //now accno is correct - update the pin at that accno
+                        //user pin matched with the original pin 
+
+                        //now update the pin
 
                         url = "http://localhost:8080/updatepin"
 
@@ -141,7 +138,7 @@
 
                         let userdata = {
                             accno: accno,
-                            newpin: pin1
+                            newpin: pin2
                         };
 
                         fetch(url,{
@@ -163,18 +160,18 @@
                         });
 
 
-
-
                     }
                     else{
-                        showToast("please enter valid accno !!")
+                        //mismatch
+                        showToast("please enter your correct 'old pin' ")
                     }
                 })
 
                 .catch(error => {
-                        showToast("error in validating the accno !!")
-                    });
+                    showToast("error in validating the pin !!")
+                });
 
+ 
             }//else
 
 

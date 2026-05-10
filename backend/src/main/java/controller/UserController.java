@@ -75,6 +75,23 @@ public class UserController {
     }
 
 
+    @GetMapping("/validatepin")
+    public String validatepin(@RequestParam String accno,@RequestParam String user_pin) {
+        User user = userRepository.findByAccno(accno);
+
+        String orig_pin = user.getPin();
+
+        if( orig_pin.equals(user_pin) ){
+            //the original pin and user entered old pin are same
+            return "true";
+        }
+        else{
+            return "false"; //invalid pin
+        }
+         
+    }
+
+
     @PatchMapping("/updatepin") 
         public String updatePin(@RequestBody Map<String, Object> jsonBody) {
             String accno = (String) jsonBody.get("accno");
