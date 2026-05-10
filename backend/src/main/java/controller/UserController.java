@@ -66,6 +66,14 @@ public class UserController {
         return ""+user.getBalance();
     }
 
+    @GetMapping("/user_details")
+    public String userdetails(@RequestParam String accno) {
+        User user = userRepository.findByAccno(accno);
+
+        
+         return user.getUname() + "," + user.getAge() + "," + user.getCity()  + "," +  user.getPhonenumber()    + "," + user.getBalance() ;
+    }
+
 
     @PatchMapping("/updatepin") 
         public String updatePin(@RequestBody Map<String, Object> jsonBody) {

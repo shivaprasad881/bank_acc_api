@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eef2f5;
+            font-family: system-ui, 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            width: 500px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+        }
+
+        .button-wrapper {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .top-btn {
+            background: #f97316;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .top-btn:hover {
+            background: #ea580c;
+        }
+
+        .fields-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .field label {
+            font-weight: 500;
+            color: #334155;
+            font-size: 0.9rem;
+        }
+
+        .field .value {
+            padding: 10px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-wrapper">
+            <button class="top-btn" onclick="profile()">Load Data</button>
+        </div>
+        <div class="fields-container">
+            <div class="field">
+                <label>uname</label>
+                <div class="value" id="uname"></div>
+            </div>
+            <div class="field">
+                <label>age</label>
+                <div class="value" id="age"></div>
+            </div>
+            <div class="field">
+                <label>city</label>
+                <div class="value" id="city"></div>
+            </div>
+            <div class="field">
+                <label>phonenumber</label>
+                <div class="value" id="phonenumber"></div>
+            </div>
+            <div class="field">
+                <label>accno</label>
+                <div class="value" id="accno"></div>
+            </div>
+            <div class="field">
+                <label>pin</label>
+                <div class="value" id="pin"></div>
+            </div>
+            <div class="field">
+                <label>balance</label>
+                <div class="value" id="balance"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+            const useracc = params.get("accno");
+            const userpin = params.get("pin");
+
+            function profile(){
+
+                //get the details from the backend - get - by using accno
+
+                url = "http://localhost:8080/user_details?accno=" + useracc ;
+
+
+                fetch(url,{
+                    method : 'GET'
+                })
+
+                .then(response => response.text())
+
+                .then(data => {
+                    let userdata = data.split(",")
+                    let uname = userdata[0];
+                    let age = userdata[1];
+                    let city = userdata[2];
+                    let phone = userdata[3]
+                    let bal = userdata[4];
+                    document.getElementById("accno").innerHTML = useracc;
+                    document.getElementById("pin").innerHTML = userpin;
+
+                    document.getElementById("uname").innerHTML = uname;
+                    document.getElementById("age").innerHTML = age;
+                    document.getElementById("city").innerHTML = city;
+                    document.getElementById("phonenumber").innerHTML = phone;
+                    document.getElementById("balance").innerHTML = bal;
+                })
+
+                .catch(error => {
+                    showToast("error in fetching the user details !!")
+                });
+
+
+                
+
+            }
+
+
+    </script>
+</body>
+</html>
