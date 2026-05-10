@@ -18,70 +18,78 @@
             align-items: center;
             background: #eef2f5;
             font-family: system-ui, 'Segoe UI', sans-serif;
+            padding: 20px;
         }
 
         .container {
-            width: 500px;
+            width: 550px;
             background: white;
-            border-radius: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             border: 1px solid #e2e8f0;
-            padding: 30px;
+            padding: 0;
         }
 
-        .button-wrapper {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .top-btn {
+        .header {
             background: #f97316;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            border-radius: 8px;
-            display: inline-block;
+            padding: 25px;
+            text-align: center;
         }
 
-        .top-btn:hover {
-            background: #ea580c;
+        .header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
         }
 
         .fields-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
+            padding: 30px;
         }
 
         .field {
             display: flex;
-            flex-direction: column;
-            gap: 5px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 12px;
         }
 
         .field label {
-            font-weight: 500;
+            font-weight: 600;
             color: #334155;
             font-size: 0.9rem;
+            width: 35%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .field .value {
-            padding: 10px;
-            background: #f1f5f9;
-            border-radius: 8px;
+            width: 65%;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
             color: #1e293b;
             font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+            text-align: right;
+        }
+
+        .value#balance {
+            font-weight: 700;
+            color: #f97316;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="button-wrapper">
-            <button class="top-btn" onclick="profile()">Load Data</button>
+        <div class="header">
+            <h2>User Profile</h2>
         </div>
         <div class="fields-container">
             <div class="field">
@@ -116,49 +124,37 @@
     </div>
     <script>
         const params = new URLSearchParams(window.location.search);
-            const useracc = params.get("accno");
-            const userpin = params.get("pin");
+        const useracc = params.get("accno");
+        const userpin = params.get("pin");
 
-            function profile(){
+        function profile(){
+            url = "http://localhost:8080/user_details?accno=" + useracc;
 
-                //get the details from the backend - get - by using accno
+            fetch(url,{
+                method : 'GET'
+            })
+            .then(response => response.text())
+            .then(data => {
+                let userdata = data.split(",")
+                let uname = userdata[0];
+                let age = userdata[1];
+                let city = userdata[2];
+                let phone = userdata[3]
+                let bal = userdata[4];
+                document.getElementById("accno").innerHTML = useracc;
+                document.getElementById("pin").innerHTML = userpin;
+                document.getElementById("uname").innerHTML = uname;
+                document.getElementById("age").innerHTML = age;
+                document.getElementById("city").innerHTML = city;
+                document.getElementById("phonenumber").innerHTML = phone;
+                document.getElementById("balance").innerHTML = bal;
+            })
+            .catch(error => {
+                showToast("error in fetching the user details !!")
+            });
+        }
 
-                url = "http://localhost:8080/user_details?accno=" + useracc ;
-
-
-                fetch(url,{
-                    method : 'GET'
-                })
-
-                .then(response => response.text())
-
-                .then(data => {
-                    let userdata = data.split(",")
-                    let uname = userdata[0];
-                    let age = userdata[1];
-                    let city = userdata[2];
-                    let phone = userdata[3]
-                    let bal = userdata[4];
-                    document.getElementById("accno").innerHTML = useracc;
-                    document.getElementById("pin").innerHTML = userpin;
-
-                    document.getElementById("uname").innerHTML = uname;
-                    document.getElementById("age").innerHTML = age;
-                    document.getElementById("city").innerHTML = city;
-                    document.getElementById("phonenumber").innerHTML = phone;
-                    document.getElementById("balance").innerHTML = bal;
-                })
-
-                .catch(error => {
-                    showToast("error in fetching the user details !!")
-                });
-
-
-                
-
-            }
-
-
+        profile()
     </script>
 </body>
 </html>
