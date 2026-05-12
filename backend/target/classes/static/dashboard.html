@@ -111,7 +111,8 @@
             <button class="action-btn" onclick="check_balance()">Check Balance</button>
             <button class="action-btn" onclick="deposit_money()">Deposit</button>
             <button class="action-btn" onclick="withdrawl_money()">With-drawl</button>
-            <button class="action-btn"  type="button"  onclick="transfer()">Transfer</button>
+            <button class="action-btn" onclick="transfer()">Transfer</button>
+            <button class="action-btn" onclick="history()">History</button>
         </div>
     </div>
 
@@ -120,6 +121,10 @@
         const params = new URLSearchParams(window.location.search);
         const useracc = params.get("accno");
         const userpin = params.get("pin");
+
+        function history(){
+            window.location.href = "history.html?accno=" + useracc ;
+        }
 
         function update_Pin(){
             window.location.href = "updatepin.html?accno=" + useracc + "&pin=" + userpin  ;

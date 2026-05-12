@@ -3,14 +3,22 @@ package controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import model.User;
+import repository.TransactionRepository;
 import repository.UserRepository;
 import java.util.Map;
+import model.Transaction;
+
+import java.util.List;
+
 
 @RestController
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @PostMapping("/register")
     public String register(@RequestBody Map<String, Object> jsonBody) {
@@ -32,6 +40,29 @@ public class UserController {
 
         return "Account Number: " + accno + " | PIN: " + pin;
     } 
+
+
+
+    @PostMapping("/transaction_registration")
+    public String transaction_registration(@RequestBody Map<String, Object> jsonBody) {
+
+        String accno = (String) jsonBody.get("accno");
+        String tar_acc = (String) jsonBody.get("tar_acc");
+
+        Double amount = Double.parseDouble(jsonBody.get("amount").toString());
+        String transaction_type = (String) jsonBody.get("transaction_type");
+
+        Transaction newtransaction = new Transaction(accno,tar_acc,amount,transaction_type);
+
+        
+
+        
+        transactionRepository.save(newtransaction);
+
+        return "Transaction record created successfully !!";
+    } 
+
+
 
     @GetMapping("/check")
     public String check(@RequestParam String accno, @RequestParam String pin) {
@@ -74,6 +105,13 @@ public class UserController {
          return user.getUname() + "," + user.getAge() + "," + user.getCity()  + "," +  user.getPhonenumber()    + "," + user.getBalance() ;
     }
 
+    @GetMapping("/user_transactions")
+    public List<Transaction> user_transactions(@RequestParam String accno) {
+        List<Transaction> transactions = transactionRepository.findByAccno(accno);
+
+        
+         return transactions;
+    }
 
     @GetMapping("/validatepin")
     public String validatepin(@RequestParam String accno,@RequestParam String user_pin) {

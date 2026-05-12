@@ -235,7 +235,77 @@
 
                                         // we are done with the transaction - debited from user and credited into tar acc
                                         showToast("Transaction successfull !!")
-                                    })
+
+                                        //once the transaction is successfull - we would create a transaction record
+
+                                        // it is a post http request - where we send the data in the body
+
+
+                                        // record - 1
+                                        let url = "http://localhost:8080/transaction_registration"
+
+                                        let transdata = {
+                                            accno : useracc,
+                                            tar_acc : tar_acc,
+                                            amount : tar_amt,
+                                            transaction_type : "debit"
+                                        }
+
+                                        fetch(url,{
+                                            method : 'POST',
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body : JSON.stringify(transdata)
+                                        })
+
+                                        .then(response => response.text())
+
+                                        .then(data => {
+                                            showToast(data);
+
+
+                                            // record - 2
+                                            transdata = {
+                                                accno : tar_acc,
+                                                tar_acc : useracc,
+                                                amount : tar_amt,
+                                                transaction_type : "credit"
+                                            }
+
+                                            fetch(url,{
+                                                method : 'POST',
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body : JSON.stringify(transdata)
+                                            })
+
+                                            .then(response => response.text())
+
+                                            .then(data => {
+                                                showToast(data);
+                                                //we are done two records
+                                            })
+
+                                            .catch(error => {
+                                                showToast("error in creating  2nd trasaction record !!")
+                                            });
+
+
+                                        })//record 1
+
+                                        .catch(error => {
+                                            showToast("error in creating the 1st trasaction record !!")
+                                        });
+
+
+
+
+
+
+
+                                    })// then -> data
 
                                     .catch(error => {
                                         showToast("error in crediting amount to target account !!")
