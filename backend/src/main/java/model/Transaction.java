@@ -1,10 +1,13 @@
 package model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "transactions")
@@ -18,6 +21,9 @@ public class Transaction {
     private String tar_acc;
     private Double amount;
     private String transaction_type;
+
+    @Column(name = "transaction_date", insertable = false, updatable = false)
+    private Timestamp transaction_date;
 
     // default constructor — required by JPA
     public Transaction() {}
@@ -36,4 +42,5 @@ public class Transaction {
     public String getTarAcc() { return tar_acc; }
     public Double getAmount() { return amount; }
     public String getTransactionType() { return transaction_type; }
+    public Timestamp getTransactionDate() { return transaction_date; }
 }

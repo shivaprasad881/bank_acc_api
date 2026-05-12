@@ -109,7 +109,6 @@ public class UserController {
     public List<Transaction> user_transactions(@RequestParam String accno) {
         List<Transaction> transactions = transactionRepository.findByAccno(accno);
 
-        
          return transactions;
     }
 

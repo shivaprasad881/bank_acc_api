@@ -72,9 +72,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>tar_acc</th>
-                    <th>amount</th>
-                    <th>category</th>
+                    <th>From account</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
                 </tr>
             </thead> 
             <tbody id="tableBody">
@@ -105,6 +106,9 @@
                 let tar_acc_value = jsondata[i].tarAcc
                 let amount_value = jsondata[i].amount
                 let transaction_type_value = jsondata[i].transactionType
+                let transaction_date_value = jsondata[i].transactionDate
+
+                let updated = transaction_date_value.substring(0,10) + " " + transaction_date_value.substring(11,19)
 
 
                 document.getElementById("tableBody").innerHTML += `
@@ -112,6 +116,7 @@
                     <td>${tar_acc_value}</td>
                     <td>${amount_value}</td>
                     <td>${transaction_type_value}</td>
+                    <td>${updated}</td>
                 </tr>
                 `
 
