@@ -148,6 +148,9 @@
             if(tar_acc=="" || tar_amt=="" || int_amt<=0 ){
                 showToast("please enter valid details!!")
             }
+            else if(useracc==tar_acc){
+                showToast("Cannot transfer to your own account!!")
+            }
             else{
                 // valid data
 

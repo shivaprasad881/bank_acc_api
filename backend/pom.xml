@@ -43,12 +43,22 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- this dependency is used to download some content as a pdf - provided by java -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.3</version>
+        </dependency>
+
         <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+
     </dependencies>
 
     <build>
