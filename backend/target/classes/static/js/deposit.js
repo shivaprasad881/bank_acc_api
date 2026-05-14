@@ -1,0 +1,64 @@
+//acc number passed from dashboard
+const params = new URLSearchParams(window.location.search);
+const useracc = params.get("accno");
+
+function deposit() {
+    let amt = document.getElementById("numberInput").value;
+    let int_amt = parseInt(amt);
+    
+    if(amt == "" || int_amt <= 0) {
+        showToast("Please enter valid amount");
+    } else {
+        // now we had valid amt - now we need to deposit that money in user acc
+        url = "http://localhost:8080/deposit";
+
+        //as we are updating a attribute - this is patch - pass input in body
+        let userdata = {
+            accno: useracc,
+            amount: amt
+        };
+
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userdata)
+        })
+        .then(response => response.text())
+        .then(data => {
+            showToast(data);
+        })
+        .catch(error => {
+            showToast("error in depositing amount !!");
+        });
+    }//else
+}//depo
+
+function showToast(message) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    
+    // Style the toast
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.backgroundColor = '#333';
+    toast.style.color = 'white';
+    toast.style.padding = '12px 24px';
+    toast.style.borderRadius = '8px';
+    toast.style.fontSize = '14px';
+    toast.style.fontFamily = 'system-ui, sans-serif';
+    toast.style.zIndex = '9999';
+    toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    
+    // Add to body
+    document.body.appendChild(toast);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}

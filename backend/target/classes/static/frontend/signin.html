@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Square Container - Orange Header</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Only one square container in the middle with orange heading at top -->
+  <div class="container">
+
+    <div class="orange-heading">
+      <h1>Container Title</h1>
+    </div>
+
+    <div class="content">
+
+      <div class="input-group">
+        <label for="user_acc">Account number :</label>
+        <input type="text" id="user_acc" placeholder="Acc000000">
+      </div>
+
+      <div class="input-group">
+        <label for="pin">PIN:</label>
+        <input type="number" id="pin" name="pin" inputmode="numeric" pattern="[0-9]*" placeholder="Enter PIN">
+      </div>
+
+      <button type="button" onclick="user_signin()">Login</button>
+      <!-- <div class="accent-line"></div> -->
+
+
+      <a href="signup.html">signup</a>
+
+    </div>
+
+  </div>
+  <script src="../js/signin.js"></script>
+</body>
+</html>

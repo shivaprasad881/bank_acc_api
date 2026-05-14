@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add this in your HTML head -->
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Transaction Table</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <button class="top-btn" onclick="download()">⬇️Download</button>
+
+    <div class="container">
+        <div class="heading">
+            <h1>Transactions</h1>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>From account</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead> 
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../js/history.js"></script>
+</body>
+</html>
