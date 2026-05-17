@@ -18,17 +18,19 @@ public class User {
     private Integer age;
     private String city;
     private String phonenumber;
+    private String password;
     private String accno;
     private String pin;
     private Double balance;
     
     public User() {}
     
-    public User(String uname, Integer age, String city, String phonenumber) {
+    public User(String uname, Integer age, String city, String phonenumber,String password) {
         this.uname = uname;
         this.age = age;
         this.city = city;
         this.phonenumber = phonenumber;
+        this.password = password;
         this.balance = 0.00;
         
     }
@@ -39,6 +41,7 @@ public class User {
     public Integer getAge() { return age; }
     public String getCity() { return city; }
     public String getPhonenumber() { return phonenumber; }
+    public String getPassword() { return password; }
     public String getAccno() { return accno; }
     public String getPin() { return pin; }
     public Double getBalance() { return balance; }
@@ -49,6 +52,7 @@ public class User {
     public void setAge(Integer age) { this.age = age; }
     public void setCity(String city) { this.city = city; }
     public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
+    public void setPassword(String password) { this.password = password; }
     public void setAccno(String accno) { this.accno = accno; }
     public void setPin(String pin) { this.pin = pin; }
     public void setBalance(Double balance) { this.balance = balance; }

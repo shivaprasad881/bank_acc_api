@@ -7,9 +7,7 @@ import model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByAccnoAndPin(String accno, String pin);
+    User findByAccnoAndPassword(String accno, String password);
     User findByAccno(String accno);
-
-    
 
 }

@@ -1,8 +1,7 @@
 const params = new URLSearchParams(window.location.search);
 const useracc = params.get("accno");
-const userpin = params.get("pin");
 
-function profile(){
+
     url = "http://localhost:8080/user_details?accno=" + useracc;
 
     fetch(url, {
@@ -15,19 +14,13 @@ function profile(){
         let age = userdata[1];
         let city = userdata[2];
         let phone = userdata[3];
-        let bal = userdata[4];
         
         document.getElementById("accno").innerHTML = useracc;
-        document.getElementById("pin").innerHTML = userpin;
         document.getElementById("uname").innerHTML = uname;
         document.getElementById("age").innerHTML = age;
         document.getElementById("city").innerHTML = city;
         document.getElementById("phonenumber").innerHTML = phone;
-        document.getElementById("balance").innerHTML = bal;
     })
     .catch(error => {
         showToast("error in fetching the user details !!");
     });
-}
-
-profile();

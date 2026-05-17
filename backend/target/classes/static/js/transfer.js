@@ -155,7 +155,7 @@ function transfer() {
                                 showToast("error in crediting amount to target account !!");
 
                                 //hoo the money has debited from user account but not credited to the target account
-                                //now we need to maintain atomicity - so the money which i had - iam unable to send to tar account - so instead of keeping with me it would transfer the money to the user account itself - then it may be a failed transaction but which obeys atomicity - at last each would have their initial money with them
+                                
 
                                 //credit tar_amt to useracc
                                 //this is patch http request as we are modifying the data

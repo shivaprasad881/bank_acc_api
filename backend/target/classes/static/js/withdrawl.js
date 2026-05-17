@@ -1,21 +1,33 @@
-//acc number passed from dashboard
-const params = new URLSearchParams(window.location.search);
-const useracc = params.get("accno");
 
-function withdrawl() {
-    let amt = document.getElementById("numberInput").value;
-    let int_amt = parseInt(amt);
+const params_with = new URLSearchParams(window.location.search);
+const useracc_with = params_with.get("accno");
 
-    if(amt == "" || int_amt <= 0) {
-        showToast("Please enter valid amount");
-    } else {
-        // now we had valid amt - now we need to withdraw money from user acc
+function withdrawl(redirect_page,passed_amount) {
+
+    if(redirect_page){
+        //hoo the call came from the frontend - so first validate the pin then withdrawl
+        let amt = document.getElementById("numberInput").value;
+        let int_amt = parseInt(amt);
+        
+        if(amt == "" || int_amt <= 0) {
+            showToast("Please enter valid amount");
+        }
+        else {
+            //now we had valid amount - redirect to pin page - validate - if correct - come here with values
+            let action = "withdrawl"
+            window.location.href = "pin.html?accno=" + useracc_with + "&action=" + action + "&amount=" + amt;
+        }
+    }
+    else{
+
+        
+        //hoo the call came from pin page  after validating the pin to deposti money
         url = "http://localhost:8080/withdrawl";
 
-        //as we are updating an attribute it is patch - pass input accno and withdrawal amt as body
+        //as we are updating a attribute - this is patch - pass input in body
         let userdata = {
-            accno: useracc,
-            amount: amt
+            accno: useracc_with,
+            amount: passed_amount
         };
 
         fetch(url, {
@@ -27,10 +39,15 @@ function withdrawl() {
         })
         .then(response => response.text())
         .then(data => {
-            showToast(data);
+            showToast(data,2000);
+
+            setTimeout(() => {
+                window.location.href = "dashboard.html?accno=" + useracc_with;
+            }, 2000);
+
         })
         .catch(error => {
-            showToast("error in withdrawing amount !!");
+            showToast("error in withdrawling amount !!");
         });
-    }//else
-}//withdrawl
+    }
+}

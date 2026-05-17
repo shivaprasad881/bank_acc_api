@@ -27,8 +27,14 @@ public class UserController {
         Integer age = Integer.parseInt((String) jsonBody.get("age"));
         String city = (String) jsonBody.get("city");
         String phonenumber = (String) jsonBody.get("phonenumber");
+        String password = (String) jsonBody.get("password");
 
-        User newUser = new User(uname, age, city, phonenumber);
+           // DEBUG: Check password value
+        System.out.println("Password received: '" + password + "'");
+        System.out.println("Password is null: " + (password == null));
+        System.out.println("Password is empty: " + (password != null && password.isEmpty()));
+
+        User newUser = new User(uname, age, city, phonenumber,password);
         User savedUser = userRepository.save(newUser);
 
         String accno = "ACC" + String.format("%08d", savedUser.getUserid());
@@ -64,9 +70,9 @@ public class UserController {
 
 
 
-    @GetMapping("/check")
-    public String check(@RequestParam String accno, @RequestParam String pin) {
-        User user = userRepository.findByAccnoAndPin(accno, pin);
+    @GetMapping("/validate_user")
+    public String validateuser(@RequestParam String accno, @RequestParam String password) {
+        User user = userRepository.findByAccnoAndPassword(accno,password);
 
         if(user == null){
             return "false";
@@ -102,7 +108,7 @@ public class UserController {
         User user = userRepository.findByAccno(accno);
 
         
-         return user.getUname() + "," + user.getAge() + "," + user.getCity()  + "," +  user.getPhonenumber()    + "," + user.getBalance() ;
+         return user.getUname() + "," + user.getAge() + "," + user.getCity()  + "," +  user.getPhonenumber() ;
     }
 
     @GetMapping("/user_transactions")
@@ -112,13 +118,13 @@ public class UserController {
          return transactions;
     }
 
-    @GetMapping("/validatepin")
-    public String validatepin(@RequestParam String accno,@RequestParam String user_pin) {
+    @GetMapping("/validate_pin")
+    public String validatepin(@RequestParam String accno,@RequestParam String userpin) {
         User user = userRepository.findByAccno(accno);
 
         String orig_pin = user.getPin();
 
-        if( orig_pin.equals(user_pin) ){
+        if( orig_pin.equals(userpin) ){
             //the original pin and user entered old pin are same
             return "true";
         }

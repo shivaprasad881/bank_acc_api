@@ -1,12 +1,11 @@
 function user_signin() {
     let useracc = document.getElementById("user_acc").value;
-    let userpin = document.getElementById("pin").value;
+    let userpass = document.getElementById("password").value;
     
-    if(useracc == "" || userpin == "" || userpin.length != 4) {
+    if(useracc == "" || userpass == "" ) {
         showToast("please fill the details");
     } else {
-        //check whether the username and pin exists
-        let url = "http://localhost:8080/check?accno=" + useracc + "&pin=" + userpin;
+        let url = "http://localhost:8080/validate_user?accno=" + useracc + "&password=" + userpass;
 
         fetch(url, {
             method: 'get'
@@ -15,17 +14,17 @@ function user_signin() {
         .then(data => {
             if(data == "true") {
                 //user present
-                showToast("successful login!!");
+                showToast("successful login!!",2000);
                 
                 setTimeout(() => {
-                    window.location.href = "dashboard.html?accno=" + useracc + "&pin=" + userpin;
-                }, 3000);
+                    window.location.href = "dashboard.html?accno=" + useracc;
+                }, 2000);
             } else {
-                showToast("invalid credentials!!");
+                showToast("Invalid credentials !!");
             }
         })
         .catch(error => {
-            showToast("error in signin !!");
+            showToast("Error in validating the user credencials !!");
         });
     }
 }
