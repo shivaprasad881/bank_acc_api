@@ -68,10 +68,10 @@ function deposit_dash() {
     window.location.href = "deposit.html?accno=" + useracc;
 }
 
-function withdrawl_money() {
+function withdrawl_dash() {
     window.location.href = "withdrawl.html?accno=" + useracc;
 }
 
-function transfer() {
+function transfer_dash() {
     window.location.href = "transfer.html?accno=" + useracc;
 }

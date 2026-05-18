@@ -52,7 +52,7 @@ body {
 .container.transfer { width: 450px; }
 
 /* history.html — wide enough for all columns + full timestamp */
-.container.history  { width: 1100px; overflow: visible; }
+.container.history  { width: 900px; overflow: visible; }
 
 /* ── Orange header strip ── */
 .orange-heading,

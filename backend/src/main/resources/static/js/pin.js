@@ -45,6 +45,16 @@ function check_pin(){
 
                         withdrawl(false,amt);
                     }
+                    else if(action=="transfer"){
+                        //hoo i done with pin validation - my next task it to transfer the money
+                        //for this i need a user acc and tar acc and the mat to transfer
+                        //these all requirements are passed by my caller for smooth transaction
+                        const tar_acc = params_pin.get("tar_acc");
+                        const amt = params_pin.get("amount");
+
+                        transfer(false,tar_acc,amt)
+
+                    }
                     else{
                         showToast("The action is not matched with any option !!")
                     } 

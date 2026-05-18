@@ -21,7 +21,7 @@ fetch(url, {
         let transaction_type_value = jsondata[i].transactionType;
         let transaction_date_value = jsondata[i].transactionDate;
 
-        let updated = transaction_date_value.substring(0,10) + " " + transaction_date_value.substring(11,19);
+        let updated = transaction_date_value.substring(0,10) + "   " + transaction_date_value.substring(11,16);
 
         document.getElementById("tableBody").innerHTML += `
         <tr>
